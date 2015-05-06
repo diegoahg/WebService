@@ -8,7 +8,12 @@ $resource = $_SERVER['REQUEST_URI'];
 switch ($method) {
     case 'GET':
         $particion = explode("/",$resource);
-        if($particion[3]=="GetUF")// Solo acepta el parametro GetUF
+        $ultimo = count($particion);
+        if($particion[($ultimo-1)]=="rest_ejemplo.php")
+        {
+            $response = array( "estadoHTTP" => "OK","mensaje" => "Para poder consumir el WS debe escribir la ruta de este, y luego el metodo GetUF" ); 
+        }
+        elseif($particion[($ultimo-1)]=="GetUF")// Solo acepta el parametro GetUF
         {
             $data = file_get_contents("http://www.ufhoy.cl/page/19/");
             if ( preg_match('|<h1 id="logo-text">(.*?)</h1>|is' , $data , $cap ) )
